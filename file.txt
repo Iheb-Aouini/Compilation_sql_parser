@@ -1,0 +1,3 @@
+CREATE table cc;
+SELECT * from tab;
+QUIT
