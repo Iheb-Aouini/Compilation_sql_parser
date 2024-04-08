@@ -2,7 +2,7 @@
 
 This project is an SQL interpreter developed using Flex and Bison, tested on Fedora and Ubuntu operating systems. The interpreter parses SQL scripts and executes them accordingly.
 
-## Installation
+## Installation (method 1)
 
 To install and run the project, follow these steps:
 
@@ -35,6 +35,13 @@ To install and run the project, follow these steps:
     ```
     gcc sql.tab.c -o sql
     ```
+## Installation (method 2)
+1. using script :
+2. chmod +x compie_me.sh
+3. ./compile_me.sh
+4. if you want to clean binaries :
+5. chmod +x clean.sh
+6. ./clean.sh
 
 ## Usage
 
