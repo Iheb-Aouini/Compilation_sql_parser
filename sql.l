@@ -41,7 +41,7 @@ PT \.
 COTE \' 
 DOUBLECOTE \"
 ETOILE \*
-Chiffre [0-9]+
+CHIFFRE [0-9]+
 ID [A-Za-z][A-Za-z0-9]*
 IGNORE (" "|\t|\n)* 
 QUIT [Qq][Uu][Ii][Tt]
@@ -53,7 +53,7 @@ QUIT [Qq][Uu][Ii][Tt]
 {OR}		{printf(" OR: %s\n", yytext); return OR;}
 {PAR_OUV}	    {printf(" PAR_OUV: %s\n", yytext); return PAR_OUV;}
 {PAR_FER}	    {printf(" PAR_FER: %s\n", yytext); return PAR_FER;}
-{PT_VIR}	    {printf(" PT_VIR: %s\nSQL requete , line %d : \n", yytext,yylineno+1); return PT_VIR;}
+{PT_VIR}	    {printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); return PT_VIR;}
 {VIR}		    {printf(" VIR: %s\n", yytext); ; return VIR;}
 {PT}		    {printf(" PT: %s\n", yytext); return PT;}
 {COTE}	        {printf(" COTE: %s\n", yytext); return COTE;}
@@ -84,9 +84,12 @@ QUIT [Qq][Uu][Ii][Tt]
 {NUMBER}	{printf(" NUMBER: %s\n", yytext) ; return NUMBER;}
 {STRING}	{printf(" STRING: %s\n", yytext) ; return STRING;}
 {ID}		{printf(" ID: %s\n", yytext);++numID; return ID; return numID;}             
-{Chiffre}	{printf(" NUM: %s\n", yytext); return NUM;}
+{CHIFFRE}	{printf(" NUM: %s\n", yytext); return NUM;}
 {IGNORE}	{}
-.		    {printf("Caractere non reconnu: %s\n", yytext); return ERROR;}
+.		    {
+
+   	fprintf(stderr,"Erreur lexicale | Ligne: %d , What do you mean by : '%s' !\n",yylineno,yytext); exit(1);
+   }
 %%
 
 int yywrap()

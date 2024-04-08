@@ -51,7 +51,6 @@ int yyerror();
 %token COTE 
 %token DOUBLECOTE 
 %token ETOILE 
-%token Chiffre 
 %token ID 
 %token NUM
 %token IGNORE 
@@ -66,19 +65,21 @@ int yyerror();
 grammaire : Axiome;
 Axiome	: requete PT_VIR loop;
 loop	: Axiome | /*epsilon*/ ;
-requete	: creer | selectionner | delete | insertion;
-creer	: CREATE TABLE newTable;
+requete	: creer | selectionner | delete | insertion | update;
+creer	: CREATE TABLE newTable {printf(" Creation de la table \n\n");};
 newTable : ID PAR_OUV Colonne PAR_FER | ID ;
-selectionner : SELECT id FROM table options;
+selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table \n\n");};
 options	: opt1 | opt2 | opt3 | /*epsilon*/ ;
-opt1	: WHERE exp opt4;
+opt1	: WHERE exp opt4 | /*epsilon*/;
 opt2	: ORDER BY table ASC  opt5 | ORDER BY table DESC opt5;
 opt3	: GROUP BY ID;
 opt4 	: opt2 | opt3 | /*epsilon*/;
 opt5 	: opt3 | /*epsilon*/;
-delete 	: DELETE FROM table opt1 { printf("Suppression de toutes les lignes de la table \n");};;
-update : UPDATE table SET Colonne operateur type WHERE Colonne operateur type;
-insertion : INSERT INTO table VALUES PAR_OUV ident1 PAR_FER ;
+delete 	: DELETE FROM table opt1 { printf("Suppression de(s) ligne(s) de la table \n\n");};
+
+update : UPDATE table SET Colonne operateur type WHERE Colonne operateur type {printf("Mise a jour effectué avec succes \n\n");};
+
+insertion : INSERT INTO table VALUES PAR_OUV ident1 PAR_FER {printf("Insertion d'une ligne dans la table \n\n");};
 ident1	: ident2 | COTE text COTE | NUM | DOUBLECOTE text DOUBLECOTE ;
 ident2	: ID | ID PT ID;
 id	: identificatuers | ETOILE;
@@ -87,8 +88,8 @@ opcexp	: /*epsilon*/ | logique exp;
 text	: Ponct | Ponct text;
 Ponct	: ID | VIR | PT | NUM;
 identificatuers	: ident2 | ident2 VIR identificatuers;
-Colonne	: ID type | ID type VIR Colonne;
-type	: NUMBER | STRING;
+Colonne	: ID | ID VIR Colonne;
+type	: NUM | STRING;
 table   : ID | ID VIR table;
 operateur : GREATERorEQUAL | LESSorEQUAL | GREATER | LESSER | DISTINCT | EQUAL;
 logique	  : AND | OR;
@@ -97,35 +98,21 @@ logique	  : AND | OR;
 
 int yyerror(const char *str)
 {
-    if (errlx>0) 
-	{
-   	fprintf(stderr,"Erreur lexicale | Ligne: %d\n%s\n",yylineno,str);
-    }
-    else 
-	{
+  
+	
     	fprintf(stderr,"Erreur syntaxique | Ligne: %d\n%s\n",yylineno,str);
-    }
+    
     int a;
     scanf("%d",&a);
 }
 
 int main (int argc, char *argv[])
 {++argv,--argc;
-printf("SQL requete , line 1 \n");
-	/*if ( argc >= 0 && argc!=NULL ){
-	yyin = fopen (argv[1], "r");
-	if (yyin == NULL)
-		{
-		printf ("Impossible d'ouvrir le fichier %s\n", argv[1]);
-		exit (-1);
-		}
-	}
-	else
-	yyin = stdin;
-	*/
+printf("Debut de l'analyse\n\n");
+
 	yyparse();
 	printf("");
 	    getchar();
-
+	printf("\n\nFin de l'analyse \n \n");
 	return 0;
 }; 
