@@ -54,25 +54,25 @@ IGNORE (" "|\t|\n)*
 QUIT [Qq][Uu][Ii][Tt]
 
 %%
-{QUIT}	{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx,numTOK,numID,numNUM,numOP, numCAR); return 0;}
+{QUIT}		{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx, numTOK, numID, numNUM, numOP, numCAR); return 0;}
 
 {PRINT}   	{printf("\n Nombre des champs : %d ", numID); return 0;}
 {AND}		{printf(" AND %s\n", yytext); ++numTOK; return AND;}
 {OR}		{printf(" OR: %s\n", yytext); ++numTOK; return OR;}
-{PAR_OUV}	    {printf(" PAR_OUV: %s\n", yytext); ++numTOK; return PAR_OUV;}
-{PAR_FER}	    {printf(" PAR_FER: %s\n", yytext); ++numTOK; return PAR_FER;}
-{PT_VIR}	    {printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); ++numTOK; return PT_VIR;}
-{VIR}		    {printf(" VIR: %s\n", yytext); ++numTOK; ; return VIR;}
+{PAR_OUV}	    {printf(" PAR_OUV: %s\n", yytext); ++numTOK; ++numCAR; return PAR_OUV;}
+{PAR_FER}	    {printf(" PAR_FER: %s\n", yytext); ++numTOK; ++numCAR; return PAR_FER;}
+{PT_VIR}	    {printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); ++numTOK; ++numCAR; return PT_VIR;}
+{VIR}		    {printf(" VIR: %s\n", yytext); ++numTOK; ++numCAR; return VIR;}
 {PT}		    {printf(" PT: %s\n", yytext); ++numTOK; return PT;} 
-{COTE}	        {printf(" COTE: %s\n", yytext); ++numTOK; return COTE;}
-{DOUBLECOTE}	{printf(" DOUBLECOTE: %s\n", yytext); ++numTOK; return DOUBLECOTE;}
-{ETOILE}		{printf(" ETOILE: %s\n", yytext); ++numTOK; return ETOILE;}
-{GREATERorEQUAL}	{printf(" GREATERorEQUAL: %s\n", yytext); ++numTOK; return GREATERorEQUAL;}
-{LESSorEQUAL}		{printf(" LESSorEQUAL: %s\n", yytext);++numTOK;return LESSorEQUAL;}
-{DISTINCT}	    {printf(" DISTINCT: %s\n", yytext); ++numTOK; return DISTINCT;}
-{LESSER}	    {printf(" LESSER: %s\n", yytext); ++numTOK; return LESSER;}
-{GREATER}	    {printf(" GREATER: %s\n", yytext); ++numTOK; return GREATER;}
-{EQUAL}		    {printf(" EQUAL: %s\n", yytext); ++numTOK; return EQUAL;}
+{COTE}	        {printf(" COTE: %s\n", yytext); ++numTOK;++numCAR; return COTE;}
+{DOUBLECOTE}	{printf(" DOUBLECOTE: %s\n", yytext); ++numTOK;++numCAR; return DOUBLECOTE;}
+{ETOILE}		{printf(" ETOILE: %s\n", yytext); ++numTOK;++numCAR; return ETOILE;}
+{GREATERorEQUAL}	{printf(" GREATERorEQUAL: %s\n", yytext); ++numTOK; ++numOP; return GREATERorEQUAL;}
+{LESSorEQUAL}		{printf(" LESSorEQUAL: %s\n", yytext);++numTOK; ++numOP;return LESSorEQUAL;}
+{DISTINCT}	    {printf(" DISTINCT: %s\n", yytext); ++numTOK; ++numOP; return DISTINCT;}
+{LESSER}	    {printf(" LESSER: %s\n", yytext); ++numTOK; ++numOP; return LESSER;}
+{GREATER}	    {printf(" GREATER: %s\n", yytext); ++numTOK; ++numOP; return GREATER;}
+{EQUAL}		    {printf(" EQUAL: %s\n", yytext); ++numTOK; ++numOP; return EQUAL;}
 {CREATE}	    {printf(" CREATE: %s\n", yytext); ++numTOK; return CREATE;}
 {TABLE}		    {printf(" TABLE: %s\n", yytext); ++numTOK; return TABLE;}
 {SELECT}	    {printf(" SELECT: %s\n", yytext); ++numTOK; return SELECT;}
@@ -89,11 +89,12 @@ QUIT [Qq][Uu][Ii][Tt]
 {BY}		{printf(" BY: %s\n", yytext); ++numTOK; return BY;}
 {ASC}		{printf(" ASC: %s\n", yytext); ++numTOK; return ASC;}
 {DESC}		{printf(" DESC: %s\n", yytext); ++numTOK; return DESC;}
-{NUMBER}	{printf(" NUMBER: %s\n", yytext) ; ++numTOK; return NUMBER;}
+{NUMBER}	{printf(" NUMBER: %s\n", yytext) ; ++numTOK; ++numNUM; return NUMBER;}
 {STRING}	{printf(" STRING: %s\n", yytext) ; ++numTOK; return STRING;}
 {ID}		{printf(" ID: %s\n", yytext); ++numID; ++numTOK; return ID; return numTOK;}
-{CHIFFRE}	{printf(" NUM: %s\n", yytext); ++numTOK; return NUM;}
+{CHIFFRE}	{printf(" NUM: %s\n", yytext); ++numTOK; ++numNUM; return NUM;}
 {IGNORE}	{}
+
 
 .		    {
 

@@ -840,7 +840,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 57 "sql.l"
-{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx,numTOK,numID,numNUM,numOP, numCAR); return 0;}
+{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx, numTOK, numID, numNUM, numOP, numCAR); return 0;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -860,22 +860,22 @@ YY_RULE_SETUP
 case 5:
 YY_RULE_SETUP
 #line 62 "sql.l"
-{printf(" PAR_OUV: %s\n", yytext); ++numTOK; return PAR_OUV;}
+{printf(" PAR_OUV: %s\n", yytext); ++numTOK; ++numCAR; return PAR_OUV;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 63 "sql.l"
-{printf(" PAR_FER: %s\n", yytext); ++numTOK; return PAR_FER;}
+{printf(" PAR_FER: %s\n", yytext); ++numTOK; ++numCAR; return PAR_FER;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 64 "sql.l"
-{printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); ++numTOK; return PT_VIR;}
+{printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); ++numTOK; ++numCAR; return PT_VIR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 65 "sql.l"
-{printf(" VIR: %s\n", yytext); ++numTOK; ; return VIR;}
+{printf(" VIR: %s\n", yytext); ++numTOK; ++numCAR; return VIR;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
@@ -885,47 +885,47 @@ YY_RULE_SETUP
 case 10:
 YY_RULE_SETUP
 #line 67 "sql.l"
-{printf(" COTE: %s\n", yytext); ++numTOK; return COTE;}
+{printf(" COTE: %s\n", yytext); ++numTOK;++numCAR; return COTE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 68 "sql.l"
-{printf(" DOUBLECOTE: %s\n", yytext); ++numTOK; return DOUBLECOTE;}
+{printf(" DOUBLECOTE: %s\n", yytext); ++numTOK;++numCAR; return DOUBLECOTE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 69 "sql.l"
-{printf(" ETOILE: %s\n", yytext); ++numTOK; return ETOILE;}
+{printf(" ETOILE: %s\n", yytext); ++numTOK;++numCAR; return ETOILE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 70 "sql.l"
-{printf(" GREATERorEQUAL: %s\n", yytext); ++numTOK; return GREATERorEQUAL;}
+{printf(" GREATERorEQUAL: %s\n", yytext); ++numTOK; ++numOP; return GREATERorEQUAL;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 71 "sql.l"
-{printf(" LESSorEQUAL: %s\n", yytext);++numTOK;return LESSorEQUAL;}
+{printf(" LESSorEQUAL: %s\n", yytext);++numTOK; ++numOP;return LESSorEQUAL;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 72 "sql.l"
-{printf(" DISTINCT: %s\n", yytext); ++numTOK; return DISTINCT;}
+{printf(" DISTINCT: %s\n", yytext); ++numTOK; ++numOP; return DISTINCT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 73 "sql.l"
-{printf(" LESSER: %s\n", yytext); ++numTOK; return LESSER;}
+{printf(" LESSER: %s\n", yytext); ++numTOK; ++numOP; return LESSER;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 74 "sql.l"
-{printf(" GREATER: %s\n", yytext); ++numTOK; return GREATER;}
+{printf(" GREATER: %s\n", yytext); ++numTOK; ++numOP; return GREATER;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 75 "sql.l"
-{printf(" EQUAL: %s\n", yytext); ++numTOK; return EQUAL;}
+{printf(" EQUAL: %s\n", yytext); ++numTOK; ++numOP; return EQUAL;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
@@ -1010,7 +1010,7 @@ YY_RULE_SETUP
 case 35:
 YY_RULE_SETUP
 #line 92 "sql.l"
-{printf(" NUMBER: %s\n", yytext) ; ++numTOK; return NUMBER;}
+{printf(" NUMBER: %s\n", yytext) ; ++numTOK; ++numNUM; return NUMBER;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
@@ -1025,7 +1025,7 @@ YY_RULE_SETUP
 case 38:
 YY_RULE_SETUP
 #line 95 "sql.l"
-{printf(" NUM: %s\n", yytext); ++numTOK; return NUM;}
+{printf(" NUM: %s\n", yytext); ++numTOK; ++numNUM; return NUM;}
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
@@ -1035,7 +1035,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 98 "sql.l"
+#line 99 "sql.l"
 {
 
    	fprintf(stderr,"Erreur lexicale | Ligne: %d , What do you mean by : '%s' !\n",yylineno,yytext); exit(1);
@@ -1043,7 +1043,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 102 "sql.l"
+#line 103 "sql.l"
 ECHO;
 	YY_BREAK
 #line 1050 "lex.yy.c"
@@ -2063,7 +2063,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 102 "sql.l"
+#line 103 "sql.l"
 
 
 int yywrap()
