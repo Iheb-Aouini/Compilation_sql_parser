@@ -88,11 +88,10 @@ extern int yydebug;
     COTE = 289,                    /* COTE  */
     DOUBLECOTE = 290,              /* DOUBLECOTE  */
     ETOILE = 291,                  /* ETOILE  */
-    Chiffre = 292,                 /* Chiffre  */
-    ID = 293,                      /* ID  */
-    NUM = 294,                     /* NUM  */
-    IGNORE = 295,                  /* IGNORE  */
-    ERROR = 296                    /* ERROR  */
+    ID = 292,                      /* ID  */
+    NUM = 293,                     /* NUM  */
+    IGNORE = 294,                  /* IGNORE  */
+    ERROR = 295                    /* ERROR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

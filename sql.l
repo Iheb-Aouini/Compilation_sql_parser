@@ -93,6 +93,8 @@ QUIT [Qq][Uu][Ii][Tt]
 {STRING}	{printf(" STRING: %s\n", yytext) ; ++numTOK; return STRING;}
 {ID}		{printf(" ID: %s\n", yytext); ++numID; ++numTOK; return ID; return numTOK;}
 {CHIFFRE}	{printf(" NUM: %s\n", yytext); ++numTOK; return NUM;}
+{IGNORE}	{}
+
 .		    {
 
    	fprintf(stderr,"Erreur lexicale | Ligne: %d , What do you mean by : '%s' !\n",yylineno,yytext); exit(1);
