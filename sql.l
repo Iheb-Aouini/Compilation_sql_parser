@@ -54,7 +54,8 @@ IGNORE (" "|\t|\n)*
 QUIT [Qq][Uu][Ii][Tt]
 
 %%
-{QUIT}	{ return 0;}
+{QUIT}	{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx,numTOK,numID,numNUM,numOP, numCAR); return 0;}
+
 {PRINT}   	{printf("\n Nombre des champs : %d ", numID); return 0;}
 {AND}		{printf(" AND %s\n", yytext); return AND;}
 {OR}		{printf(" OR: %s\n", yytext); return OR;}
@@ -62,7 +63,7 @@ QUIT [Qq][Uu][Ii][Tt]
 {PAR_FER}	    {printf(" PAR_FER: %s\n", yytext); return PAR_FER;}
 {PT_VIR}	    {printf(" PT_VIR: %s  \n===> SQL requete , line %d : ", yytext,yylineno); return PT_VIR;}
 {VIR}		    {printf(" VIR: %s\n", yytext); ; return VIR;}
-{PT}		    {printf(" PT: %s\n", yytext); return PT;}
+{PT}		    {printf(" PT: %s\n", yytext); return PT;} 
 {COTE}	        {printf(" COTE: %s\n", yytext); return COTE;}
 {DOUBLECOTE}	{printf(" DOUBLECOTE: %s\n", yytext); return DOUBLECOTE;}
 {ETOILE}		{printf(" ETOILE: %s\n", yytext); return ETOILE;}
