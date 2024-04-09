@@ -16,46 +16,44 @@ int yyerror();
 //Declaration des Terminaux (miniscule) utilisés (.l) : 
 %locations
 
-%token AND 
-%token OR 
-%token LESSorEQUAL 
-%token GREATERorEQUAL 
-%token DISTINCT 
-%token GREATER 
-%token LESSER
-%token EQUAL 
-%token CREATE
-%token TABLE 
-%token SELECT 
-%token UPDATE
-%token SET
-
-%token DELETE 
-%token INSERT 
-%token INTO 
-%token FROM 
-%token WHERE 
-%token GROUP 
-%token ORDER 
-%token BY 
-%token ASC 
-%token DESC 
-%token STRING 
-%token NUMBER 
-%token VALUES 
-%token PAR_OUV 
-%token PAR_FER 
-%token PT_VIR 
-%token VIR 
-%token PT 
-%token COTE 
-%token DOUBLECOTE 
-%token ETOILE 
-%token Chiffre 
-%token ID 
-%token NUM
-%token IGNORE 
-%token ERROR
+%token QUIT; 
+%token ID;
+%token DELETE;
+%token UPDATE;
+%token LIMIT;
+%token FROM;
+%token ORDER;
+%token BY;
+%token USING;
+%token WHERE;
+%token FIN;
+%token ANDOP;
+%token OR;
+%token SET;
+%left <subtok> COMPARISON /* != < > <= >= <=> */;
+%token POINT;
+%token INT;
+%token SEP;
+%token GROUP;
+%token INTNUM;
+%token EQUALS;
+%token POSTROFE;
+%token ETOILE;
+%token SELECT;
+%token AVG;
+%token SUM;
+%token COUNT;
+%token INSERT;
+%token INTO;
+%token CREATE;
+%token TABLE;
+%token DATABASE;
+%token PARAO;
+%token PARAF;
+%token VALUES;
+%token DROP;
+%left <subtok> TP ;
+%left <subtok> CONDITION ;
 
 
 
@@ -68,7 +66,7 @@ Axiome	: requete PT_VIR loop;
 loop	: Axiome | /*epsilon*/ ;
 requete	: creer | selectionner | delete | insertion;
 creer	: CREATE TABLE newTable;
-newTable : ID PAR_OUV Colonne PAR_FER | ID ;
+newTable : ID PARAO Colonne PAR_FER | ID ;
 selectionner : SELECT id FROM table options;
 options	: opt1 | opt2 | opt3 | /*epsilon*/ ;
 opt1	: WHERE exp opt4;
@@ -78,11 +76,11 @@ opt4 	: opt2 | opt3 | /*epsilon*/;
 opt5 	: opt3 | /*epsilon*/;
 delete 	: DELETE FROM table opt1 { printf("Suppression de toutes les lignes de la table \n");};;
 update : UPDATE table SET Colonne operateur type WHERE Colonne operateur type;
-insertion : INSERT INTO table VALUES PAR_OUV ident1 PAR_FER ;
+insertion : INSERT INTO table VALUES PARAO ident1 PAR_FER ;
 ident1	: ident2 | COTE text COTE | NUM | DOUBLECOTE text DOUBLECOTE ;
 ident2	: ID | ID PT ID;
 id	: identificatuers | ETOILE;
-exp	: ident1 operateur ident1 opcexp  | PAR_OUV ident1 operateur ident1 opcexp PAR_FER opcexp;
+exp	: ident1 operateur ident1 opcexp  | PARAO ident1 operateur ident1 opcexp PAR_FER opcexp;
 opcexp	: /*epsilon*/ | logique exp;
 text	: Ponct | Ponct text;
 Ponct	: ID | VIR | PT | NUM;
