@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -541,10 +541,12 @@ char *yytext;
 #line 2 "sql.l"
 #include <stdio.h>
 #include "sql.tab.h"
-int numID=0; 
 int errlx=0;
-#line 546 "lex.yy.c"
-#line 547 "lex.yy.c"
+int oldstate;
+int numTOK=0; int numID=0; int numNUM=0; int numOP=0; int numCAR=0;
+
+#line 549 "lex.yy.c"
+#line 550 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -761,9 +763,9 @@ YY_DECL
 		}
 
 	{
-#line 49 "sql.l"
+#line 53 "sql.l"
 
-#line 766 "lex.yy.c"
+#line 769 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -832,211 +834,211 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 50 "sql.l"
-{ return 0;}
+#line 54 "sql.l"
+{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx,numTOK,numID,numNUM,numOP, numCAR); return 0;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 51 "sql.l"
+#line 55 "sql.l"
 {printf("\n Nombre des champs : %d ", numID); return 0;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 52 "sql.l"
+#line 56 "sql.l"
 {printf(" AND %s\n", yytext); return AND;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 53 "sql.l"
+#line 57 "sql.l"
 {printf(" OR: %s\n", yytext); return OR;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 54 "sql.l"
+#line 58 "sql.l"
 {printf(" PAR_OUV: %s\n", yytext); return PAR_OUV;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 55 "sql.l"
+#line 59 "sql.l"
 {printf(" PAR_FER: %s\n", yytext); return PAR_FER;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 56 "sql.l"
+#line 60 "sql.l"
 {printf(" PT_VIR: %s\nSQL requete , line %d : \n", yytext,yylineno+1); return PT_VIR;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 57 "sql.l"
+#line 61 "sql.l"
 {printf(" VIR: %s\n", yytext); ; return VIR;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 58 "sql.l"
+#line 62 "sql.l"
 {printf(" PT: %s\n", yytext); return PT;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 59 "sql.l"
+#line 63 "sql.l"
 {printf(" COTE: %s\n", yytext); return COTE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 60 "sql.l"
+#line 64 "sql.l"
 {printf(" DOUBLECOTE: %s\n", yytext); return DOUBLECOTE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 61 "sql.l"
+#line 65 "sql.l"
 {printf(" ETOILE: %s\n", yytext); return ETOILE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 62 "sql.l"
+#line 66 "sql.l"
 {printf(" GREATERorEQUAL: %s\n", yytext); return GREATERorEQUAL;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 63 "sql.l"
+#line 67 "sql.l"
 {printf(" LESSorEQUAL: %s\n", yytext);return LESSorEQUAL;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 64 "sql.l"
+#line 68 "sql.l"
 {printf(" DISTINCT: %s\n", yytext); return DISTINCT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "sql.l"
+#line 69 "sql.l"
 {printf(" LESSER: %s\n", yytext); return LESSER;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 66 "sql.l"
+#line 70 "sql.l"
 {printf(" GREATER: %s\n", yytext); return GREATER;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 67 "sql.l"
+#line 71 "sql.l"
 {printf(" EQUAL: %s\n", yytext); return EQUAL;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 68 "sql.l"
+#line 72 "sql.l"
 {printf(" CREATE: %s\n", yytext); return CREATE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 69 "sql.l"
+#line 73 "sql.l"
 {printf(" TABLE: %s\n", yytext); return TABLE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 70 "sql.l"
+#line 74 "sql.l"
 {printf(" SELECT: %s\n", yytext); return SELECT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 71 "sql.l"
+#line 75 "sql.l"
 {printf(" SET: %s\n", yytext); return SET;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 72 "sql.l"
+#line 76 "sql.l"
 {printf(" UPDATE: %s\n", yytext); return UPDATE;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 73 "sql.l"
+#line 77 "sql.l"
 {printf(" DELETE: %s\n", yytext); return DELETE;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 74 "sql.l"
+#line 78 "sql.l"
 {printf(" INSERT: %s\n", yytext); return INSERT;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 75 "sql.l"
+#line 79 "sql.l"
 {printf(" INTO: %s\n", yytext); return INTO;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 76 "sql.l"
+#line 80 "sql.l"
 {printf(" VALUES: %s\n", yytext); return VALUES;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 77 "sql.l"
+#line 81 "sql.l"
 {printf(" FROM: %s\n", yytext);  return FROM;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 78 "sql.l"
+#line 82 "sql.l"
 {printf(" WHERE: %s\n", yytext);  return WHERE;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 79 "sql.l"
+#line 83 "sql.l"
 {printf(" GROUP: %s\n", yytext); return GROUP;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 80 "sql.l"
+#line 84 "sql.l"
 {printf(" ORDER: %s\n", yytext);  return ORDER;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 81 "sql.l"
+#line 85 "sql.l"
 {printf(" BY: %s\n", yytext); return BY;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 82 "sql.l"
+#line 86 "sql.l"
 {printf(" ASC: %s\n", yytext); return ASC;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 83 "sql.l"
+#line 87 "sql.l"
 {printf(" DESC: %s\n", yytext); return DESC;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 84 "sql.l"
+#line 88 "sql.l"
 {printf(" NUMBER: %s\n", yytext) ; return NUMBER;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 85 "sql.l"
+#line 89 "sql.l"
 {printf(" STRING: %s\n", yytext) ; return STRING;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 86 "sql.l"
+#line 90 "sql.l"
 {printf(" ID: %s\n", yytext);++numID; return ID; return numID;}             
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 87 "sql.l"
+#line 91 "sql.l"
 {printf(" NUM: %s\n", yytext); return NUM;}
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 88 "sql.l"
+#line 92 "sql.l"
 {}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 89 "sql.l"
+#line 93 "sql.l"
 {printf("Caractere non reconnu: %s\n", yytext); return ERROR;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 90 "sql.l"
+#line 94 "sql.l"
 ECHO;
 	YY_BREAK
-#line 1039 "lex.yy.c"
+#line 1042 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2053,7 +2055,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 90 "sql.l"
+#line 94 "sql.l"
 
 
 int yywrap()

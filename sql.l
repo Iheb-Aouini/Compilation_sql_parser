@@ -1,10 +1,13 @@
 %{
 #include <stdio.h>
 #include "sql.tab.h"
-int numID=0; 
 int errlx=0;
 int oldstate;
-int numTOK=0; int numID=0; int numNUM=0; int numOP=0; int numCAR=0;
+int numTOK=0;
+ int numID=0; 
+ int numNUM=0; 
+ int numOP=0; 
+ int numCAR=0;
 
 %}
 
@@ -50,7 +53,6 @@ ETOILE \*
 Chiffre [0-9]+
 ID [A-Za-z][A-Za-z0-9]*
 IGNORE (" "|\t|\n)* 
-QUIT [Qq][Uu][Ii][Tt]
 
 %%
 {QUIT}	{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx,numTOK,numID,numNUM,numOP, numCAR); return 0;}
@@ -99,3 +101,4 @@ int yywrap()
  {
     return 0    ;
     }
+    
