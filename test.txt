@@ -1,3 +1,4 @@
 SELECT * from users;
 CREATE TABLE tt;
 DELETE FROM tab where a=2;
+quit; 
