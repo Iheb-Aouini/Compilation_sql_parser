@@ -49,14 +49,17 @@ COTE \'
 DOUBLECOTE \"
 ETOILE \*
 CHIFFRE [0-9]+
-CHIFFRE [0-9]+
 ID [A-Za-z][A-Za-z0-9]*
 IGNORE (" "|\t|\n)* 
-QUIT [Qq][Uu][Ii][Tt]
+QUIT [Qq][Uu][Ii][Tt](;)?
 
 %%
-{QUIT}		{printf("\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx, numTOK, numID, numNUM, numOP, numCAR); return 0;}
-
+{QUIT}		{printf("\n\nLa phase d'analyse lexical est terminé -> Resultat de l'analyseur lexical : \n\t - Nombres d'erreurs Lexical(Caracteres inconnus ) : %d\n\t - Mots cle: %d\n\t - IDs: %d\n\t - Numeros: %d\n\t - Operateurs: %d\n\t - Caracteres speciaux(*,;): %d\n", errlx, numTOK, numID, numNUM, numOP, numCAR);return QUIT;}
+<<EOF>> {
+  printf("\nEnd of file reached.\n");
+  
+  return 0; 
+}
 {PRINT}   	{printf("\n Nombre des champs : %d ", numID); return 0;}
 {AND}		{printf(" AND %s\n", yytext); ++numTOK; return AND;}
 {OR}		{printf(" OR: %s\n", yytext); ++numTOK; return OR;}
@@ -96,14 +99,12 @@ QUIT [Qq][Uu][Ii][Tt]
 {CHIFFRE}	{printf(" NUM: %s\n", yytext); ++numTOK; ++numNUM; return NUM;}
 {IGNORE}	{}
 
-
 .		    {
-
    	fprintf(stderr,"Erreur lexicale | Ligne: %d , What do you mean by : '%s' !\n",yylineno,yytext); exit(1);
    }
 %%
 
 int yywrap()
  {
-    return 0    ;
+    return 1;
     }

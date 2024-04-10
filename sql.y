@@ -55,7 +55,7 @@ int yyerror();
 %token NUM
 %token IGNORE 
 %token ERROR
-
+%token QUIT
 
 
 //Régles de production de grammaire : nT -> nT | T | nT ... 
@@ -63,9 +63,9 @@ int yyerror();
 %start grammaire
 %%
 grammaire : Axiome;
-Axiome	: requete PT_VIR loop;
+Axiome	: requete PT_VIR loop | QUIT PT_VIR | QUIT;
 loop	: Axiome | /*epsilon*/ ;
-requete	: creer | selectionner | delete | insertion | update;
+requete	: creer | selectionner | delete | insertion | update ;
 creer	: CREATE TABLE newTable {printf(" Creation de la table \n\n");};
 newTable : ID PAR_OUV Colonne PAR_FER | ID ;
 selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table \n\n");};
@@ -114,5 +114,25 @@ printf("Debut de l'analyse\n\n");
 	printf("");
 	    getchar();
 	printf("\n\nFin de l'analyse \n \n");
+
+    freopen("/dev/tty", "r", stdin); // to redirect input to the terminal
+
+   char str[5]; 
+  printf("Do you want to scan another sql script [Y|N] : ");
+  scanf("%s", str);
+  if (str[0]=='Y'){
+    printf("\033[2J"); // Clear the screen using ANSI escape sequence
+    printf("\033[1;1H"); // Move cursor to top-left corner       
+
+	char filename[100];
+	printf("\n Enter filename of the sql script : ");
+	scanf("%s", filename);
+	char command[115];  
+    sprintf(command, "./sql < %s", filename);
+	system(command);
+  }
+  else {
+	printf("\n Bye \n");
+  }
 	return 0;
 }; 

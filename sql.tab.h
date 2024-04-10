@@ -91,7 +91,8 @@ extern int yydebug;
     ID = 292,                      /* ID  */
     NUM = 293,                     /* NUM  */
     IGNORE = 294,                  /* IGNORE  */
-    ERROR = 295                    /* ERROR  */
+    ERROR = 295,                   /* ERROR  */
+    QUIT = 296                     /* QUIT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

@@ -5,4 +5,4 @@ CREATE TABLE tt;
 INSERT INTO users VALUES ('ab3ethYaWalid');
 UPDATE user SET salaire=1500 WHERE id=5;
 
-quit; 
+QUIT;
