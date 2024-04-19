@@ -1,8 +1,9 @@
 SELECT * from users;
+SELECT nom,age from clients;
 CREATE TABLE tt;
 DELETE FROM tab where a=2;
 CREATE TABLE tt;
-INSERT INTO users VALUES ('ab3ethYaWalid');
+INSERT INTO users VALUES ('walid');
 UPDATE user SET salaire=1500 WHERE id=5;
 
-QUIT;
+QUIT

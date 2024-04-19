@@ -549,9 +549,9 @@ int errlx=0;
 int oldstate;
 int numTOK=0;
 
- int numNUM=0; 
- int numOP=0; 
- int numCAR=0;
+int numNUM=0; 
+int numOP=0; 
+int numCAR=0;
 #line 555 "lex.yy.c"
 #line 556 "lex.yy.c"
 

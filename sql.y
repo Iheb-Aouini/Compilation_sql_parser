@@ -10,12 +10,14 @@
 #include "lex.yy.c"
 int yylex();
 int yyerror();
+int nb_champ=1;
 %}
 
 
 //Declaration des Terminaux (miniscule) utilisés (.l) : 
 %locations
 
+//les Tokens 
 %token AND 
 %token OR 
 %token LESSorEQUAL 
@@ -68,7 +70,7 @@ loop	: Axiome | /*epsilon*/ ;
 requete	: creer | selectionner | delete | insertion | update ;
 creer	: CREATE TABLE newTable {printf(" Creation de la table \n\n");};
 newTable : ID PAR_OUV Colonne PAR_FER | ID ;
-selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table \n\n");};
+selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table \n Nombre de champ de cet requete : %d\n",nb_champ);};
 options	: opt1 | opt2 | opt3 | /*epsilon*/ ;
 opt1	: WHERE exp opt4 | /*epsilon*/;
 opt2	: ORDER BY table ASC  opt5 | ORDER BY table DESC opt5;
@@ -82,12 +84,12 @@ update : UPDATE table SET Colonne operateur type WHERE Colonne operateur type {p
 insertion : INSERT INTO table VALUES PAR_OUV ident1 PAR_FER {printf("Insertion d'une ligne dans la table \n\n");};
 ident1	: ident2 | COTE text COTE | NUM | DOUBLECOTE text DOUBLECOTE ;
 ident2	: ID | ID PT ID;
-id	: identificatuers | ETOILE;
+id	: identificatuers | ETOILE  ;
 exp	: ident1 operateur ident1 opcexp  | PAR_OUV ident1 operateur ident1 opcexp PAR_FER opcexp;
 opcexp	: /*epsilon*/ | logique exp;
 text	: Ponct | Ponct text;
 Ponct	: ID | VIR | PT | NUM;
-identificatuers	: ident2 | ident2 VIR identificatuers;
+identificatuers	: ident2 | ident2 VIR identificatuers {nb_champ++;};
 Colonne	: ID | ID VIR Colonne;
 type	: NUM | STRING;
 table   : ID | ID VIR table;

@@ -75,8 +75,9 @@
 #include "lex.yy.c"
 int yylex();
 int yyerror();
+int nb_champ=1;
 
-#line 80 "sql.tab.c"
+#line 81 "sql.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -568,13 +569,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    65,    65,    66,    66,    66,    67,    67,    68,    68,
-      68,    68,    68,    69,    70,    70,    71,    72,    72,    72,
-      72,    73,    73,    74,    74,    75,    76,    76,    76,    77,
-      77,    78,    80,    82,    83,    83,    83,    83,    84,    84,
-      85,    85,    86,    86,    87,    87,    88,    88,    89,    89,
-      89,    89,    90,    90,    91,    91,    92,    92,    93,    93,
-      94,    94,    94,    94,    94,    94,    95,    95
+       0,    67,    67,    68,    68,    68,    69,    69,    70,    70,
+      70,    70,    70,    71,    72,    72,    73,    74,    74,    74,
+      74,    75,    75,    76,    76,    77,    78,    78,    78,    79,
+      79,    80,    82,    84,    85,    85,    85,    85,    86,    86,
+      87,    87,    88,    88,    89,    89,    90,    90,    91,    91,
+      91,    91,    92,    92,    93,    93,    94,    94,    95,    95,
+      96,    96,    96,    96,    96,    96,    97,    97
 };
 #endif
 
@@ -1322,37 +1323,43 @@ yyreduce:
   switch (yyn)
     {
   case 13: /* creer: CREATE TABLE newTable  */
-#line 69 "sql.y"
+#line 71 "sql.y"
                                 {printf(" Creation de la table \n\n");}
-#line 1328 "sql.tab.c"
+#line 1329 "sql.tab.c"
     break;
 
   case 16: /* selectionner: SELECT id FROM table options  */
-#line 71 "sql.y"
-                                           {printf(" Affichage de(s) ligne(s) de la table \n\n");}
-#line 1334 "sql.tab.c"
+#line 73 "sql.y"
+                                           {printf(" Affichage de(s) ligne(s) de la table \n Nombre de champ de cet requete : %d\n",nb_champ);}
+#line 1335 "sql.tab.c"
     break;
 
   case 31: /* delete: DELETE FROM table opt1  */
-#line 78 "sql.y"
+#line 80 "sql.y"
                                  { printf("Suppression de(s) ligne(s) de la table \n\n");}
-#line 1340 "sql.tab.c"
+#line 1341 "sql.tab.c"
     break;
 
   case 32: /* update: UPDATE table SET Colonne operateur type WHERE Colonne operateur type  */
-#line 80 "sql.y"
+#line 82 "sql.y"
                                                                               {printf("Mise a jour effectué avec succes \n\n");}
-#line 1346 "sql.tab.c"
+#line 1347 "sql.tab.c"
     break;
 
   case 33: /* insertion: INSERT INTO table VALUES PAR_OUV ident1 PAR_FER  */
-#line 82 "sql.y"
+#line 84 "sql.y"
                                                             {printf("Insertion d'une ligne dans la table \n\n");}
-#line 1352 "sql.tab.c"
+#line 1353 "sql.tab.c"
+    break;
+
+  case 53: /* identificatuers: ident2 VIR identificatuers  */
+#line 92 "sql.y"
+                                                      {nb_champ++;}
+#line 1359 "sql.tab.c"
     break;
 
 
-#line 1356 "sql.tab.c"
+#line 1363 "sql.tab.c"
 
       default: break;
     }
@@ -1550,7 +1557,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 97 "sql.y"
+#line 99 "sql.y"
 
 
 int yyerror(const char *str)
@@ -1572,19 +1579,19 @@ printf("Debut de l'analyse\n\n");
 	    getchar();
 	printf("\n\nFin de l'analyse \n \n");
 
-    freopen("/dev/tty", "r", stdin);
+    freopen("/dev/tty", "r", stdin); // to redirect input to the terminal
 
    char str[5]; 
   printf("Do you want to scan another sql script [Y|N] : ");
   scanf("%s", str);
   if (str[0]=='Y'){
-   printf("\033[2J"); // Clear the screen using ANSI escape sequence
-    printf("\033[1;1H"); // Move cursor to top-left corner
-	
+    printf("\033[2J"); // Clear the screen using ANSI escape sequence
+    printf("\033[1;1H"); // Move cursor to top-left corner       
+
 	char filename[100];
 	printf("\n Enter filename of the sql script : ");
 	scanf("%s", filename);
-	char command[115];  // Assuming maximum length of command string
+	char command[115];  
     sprintf(command, "./sql < %s", filename);
 	system(command);
   }

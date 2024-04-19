@@ -1,0 +1,2 @@
+SELECT nom,age,localisation FROM users;
+QUIT
