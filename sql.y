@@ -11,6 +11,7 @@
 int yylex();
 int yyerror();
 int nb_champ=1;
+int is_select_all=0;
 %}
 
 
@@ -70,7 +71,7 @@ loop	: Axiome | /*epsilon*/ ;
 requete	: creer | selectionner | delete | insertion | update ;
 creer	: CREATE TABLE newTable {printf(" Creation de la table \n\n");};
 newTable : ID PAR_OUV Colonne PAR_FER | ID ;
-selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table \n Nombre de champ de cet requete : %d\n",nb_champ);};
+selectionner : SELECT id FROM table options{printf(" Affichage de(s) ligne(s) de la table ") ; if (is_select_all==0) {printf("\n Nombre de champ de cet requete : %d\n\n",nb_champ) ;} else {printf("\n Nombre de champ de cet requete :Selection de Tous les champs (Etoile) \n\n") ;} nb_champ=1;is_select_all=0;};
 options	: opt1 | opt2 | opt3 | /*epsilon*/ ;
 opt1	: WHERE exp opt4 | /*epsilon*/;
 opt2	: ORDER BY table ASC  opt5 | ORDER BY table DESC opt5;
@@ -84,7 +85,7 @@ update : UPDATE table SET Colonne operateur type WHERE Colonne operateur type {p
 insertion : INSERT INTO table VALUES PAR_OUV ident1 PAR_FER {printf("Insertion d'une ligne dans la table \n\n");};
 ident1	: ident2 | COTE text COTE | NUM | DOUBLECOTE text DOUBLECOTE ;
 ident2	: ID | ID PT ID;
-id	: identificatuers | ETOILE  ;
+id	: identificatuers | ETOILE {is_select_all=1;}  ;
 exp	: ident1 operateur ident1 opcexp  | PAR_OUV ident1 operateur ident1 opcexp PAR_FER opcexp;
 opcexp	: /*epsilon*/ | logique exp;
 text	: Ponct | Ponct text;
@@ -99,11 +100,8 @@ logique	  : AND | OR;
 %%
 
 int yyerror(const char *str)
-{
-  
-	
-    	fprintf(stderr,"Erreur syntaxique | Ligne: %d\n%s\n",yylineno,str);
-    
+{	
+    	fprintf(stderr,"Erreur syntaxique | Ligne: %d\n%s\n",yylineno,str);   
     int a;
     scanf("%d",&a);
 }

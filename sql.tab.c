@@ -76,8 +76,9 @@
 int yylex();
 int yyerror();
 int nb_champ=1;
+int is_select_all=0;
 
-#line 81 "sql.tab.c"
+#line 82 "sql.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -569,13 +570,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    67,    67,    68,    68,    68,    69,    69,    70,    70,
-      70,    70,    70,    71,    72,    72,    73,    74,    74,    74,
-      74,    75,    75,    76,    76,    77,    78,    78,    78,    79,
-      79,    80,    82,    84,    85,    85,    85,    85,    86,    86,
-      87,    87,    88,    88,    89,    89,    90,    90,    91,    91,
-      91,    91,    92,    92,    93,    93,    94,    94,    95,    95,
-      96,    96,    96,    96,    96,    96,    97,    97
+       0,    68,    68,    69,    69,    69,    70,    70,    71,    71,
+      71,    71,    71,    72,    73,    73,    74,    75,    75,    75,
+      75,    76,    76,    77,    77,    78,    79,    79,    79,    80,
+      80,    81,    83,    85,    86,    86,    86,    86,    87,    87,
+      88,    88,    89,    89,    90,    90,    91,    91,    92,    92,
+      92,    92,    93,    93,    94,    94,    95,    95,    96,    96,
+      97,    97,    97,    97,    97,    97,    98,    98
 };
 #endif
 
@@ -1323,43 +1324,49 @@ yyreduce:
   switch (yyn)
     {
   case 13: /* creer: CREATE TABLE newTable  */
-#line 71 "sql.y"
+#line 72 "sql.y"
                                 {printf(" Creation de la table \n\n");}
-#line 1329 "sql.tab.c"
+#line 1330 "sql.tab.c"
     break;
 
   case 16: /* selectionner: SELECT id FROM table options  */
-#line 73 "sql.y"
-                                           {printf(" Affichage de(s) ligne(s) de la table \n Nombre de champ de cet requete : %d\n",nb_champ);}
-#line 1335 "sql.tab.c"
+#line 74 "sql.y"
+                                           {printf(" Affichage de(s) ligne(s) de la table ") ; if (is_select_all==0) {printf("\n Nombre de champ de cet requete : %d\n\n",nb_champ) ;} else {printf("\n Nombre de champ de cet requete :Selection de Tous les champs (Etoile) \n\n") ;} nb_champ=1;is_select_all=0;}
+#line 1336 "sql.tab.c"
     break;
 
   case 31: /* delete: DELETE FROM table opt1  */
-#line 80 "sql.y"
+#line 81 "sql.y"
                                  { printf("Suppression de(s) ligne(s) de la table \n\n");}
-#line 1341 "sql.tab.c"
+#line 1342 "sql.tab.c"
     break;
 
   case 32: /* update: UPDATE table SET Colonne operateur type WHERE Colonne operateur type  */
-#line 82 "sql.y"
+#line 83 "sql.y"
                                                                               {printf("Mise a jour effectué avec succes \n\n");}
-#line 1347 "sql.tab.c"
+#line 1348 "sql.tab.c"
     break;
 
   case 33: /* insertion: INSERT INTO table VALUES PAR_OUV ident1 PAR_FER  */
-#line 84 "sql.y"
+#line 85 "sql.y"
                                                             {printf("Insertion d'une ligne dans la table \n\n");}
-#line 1353 "sql.tab.c"
+#line 1354 "sql.tab.c"
+    break;
+
+  case 41: /* id: ETOILE  */
+#line 88 "sql.y"
+                                   {is_select_all=1;}
+#line 1360 "sql.tab.c"
     break;
 
   case 53: /* identificatuers: ident2 VIR identificatuers  */
-#line 92 "sql.y"
+#line 93 "sql.y"
                                                       {nb_champ++;}
-#line 1359 "sql.tab.c"
+#line 1366 "sql.tab.c"
     break;
 
 
-#line 1363 "sql.tab.c"
+#line 1370 "sql.tab.c"
 
       default: break;
     }
@@ -1557,15 +1564,12 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 99 "sql.y"
+#line 100 "sql.y"
 
 
 int yyerror(const char *str)
-{
-  
-	
-    	fprintf(stderr,"Erreur syntaxique | Ligne: %d\n%s\n",yylineno,str);
-    
+{	
+    	fprintf(stderr,"Erreur syntaxique | Ligne: %d\n%s\n",yylineno,str);   
     int a;
     scanf("%d",&a);
 }
